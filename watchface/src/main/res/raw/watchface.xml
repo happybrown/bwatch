@@ -1,0 +1,273 @@
+<?xml version="1.0"?>
+<!--
+    Bwatch O1 — "Gradient Glass Cards" digital watch face for Galaxy Watch 6 (Wear OS 4+).
+
+    Layout reference: mockup-o1-final.html (480px space, here re-expressed in the WFF 450px canvas).
+    Features:
+      - 12-hour time (h:mm) + AM/PM
+      - Battery percent + gradient progress bar
+      - Date (Mon name + day) and weekday, in glass-style cards
+    Design notes:
+      - Canvas is 450x450; the system scales to 432 (40mm) / 480 (44mm).
+      - All elements are kept inside the inscribed circle so nothing is clipped by the round frame.
+      - Time text is solid white for maximum sharpness/contrast (top priority).
+        Gradient identity is carried by the radial background and the battery bar.
+      - AMBIENT (always-on) variants hide filled card/bar shapes and thin the clock to limit burn-in.
+-->
+<WatchFace width="450" height="450" clipShape="CIRCLE">
+  <Metadata key="CLOCK_TYPE" value="DIGITAL" />
+  <Metadata key="PREVIEW_TIME" value="22:08:00" />
+
+  <!-- User setting (watch face editor): time text style — ON = gradient, OFF = solid white -->
+  <UserConfigurations>
+    <BooleanConfiguration id="time_gradient"
+        displayName="time_style_label"
+        screenReaderText="time_style_label"
+        defaultValue="TRUE" />
+    <BooleanConfiguration id="is_korean"
+        displayName="language_label"
+        screenReaderText="language_label"
+        defaultValue="FALSE" />
+  </UserConfigurations>
+
+  <Scene backgroundColor="#ff000000">
+
+    <!-- ===== Background: dark-blue radial gradient fading to black (AMOLED-friendly) ===== -->
+    <PartDraw x="0" y="0" width="450" height="450">
+      <Ellipse x="0" y="0" width="450" height="450">
+        <Fill color="#ff080b13">
+          <RadialGradient
+              centerX="225" centerY="70" radius="360"
+              colors="#ff15233b #ff080b13 #ff000000"
+              positions="0 0.55 1" />
+        </Fill>
+      </Ellipse>
+    </PartDraw>
+
+    <!-- ===== Time: 12-hour h:mm — style selectable in the editor (gradient / solid) ===== -->
+    <BooleanConfiguration id="time_gradient">
+      <!-- Gradient: renderMode clipping — gradient Rectangle (SOURCE) shows only through the
+           white time glyphs (MASK). Background is untouched. -->
+      <BooleanOption id="TRUE">
+        <Group name="time_grad_group" x="0" y="80" width="450" height="150">
+          <Variant mode="AMBIENT" target="alpha" value="0" />
+          <PartDraw x="0" y="0" width="450" height="150">
+            <Rectangle x="0" y="0" width="450" height="150">
+              <Fill color="#ffffffff">
+                <LinearGradient startX="110" startY="20" endX="340" endY="130"
+                    colors="#ffbfe3ff #ffffffff #ff8fb6ff" positions="0 0.5 1" />
+              </Fill>
+            </Rectangle>
+          </PartDraw>
+          <DigitalClock x="0" y="0" width="450" height="150" renderMode="MASK">
+            <TimeText format="h:mm" hourFormat="12" align="CENTER"
+                      x="0" y="0" width="450" height="150">
+              <Font family="SYNC_TO_DEVICE" size="132" weight="BOLD" slant="NORMAL" color="#ffffffff" />
+            </TimeText>
+          </DigitalClock>
+        </Group>
+      </BooleanOption>
+      <!-- Solid: bold, solid white -->
+      <BooleanOption id="FALSE">
+        <DigitalClock x="0" y="80" width="450" height="150">
+          <TimeText format="h:mm" hourFormat="12" align="CENTER"
+                    x="0" y="0" width="450" height="150" alpha="255">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Font family="SYNC_TO_DEVICE" size="132" weight="BOLD" slant="NORMAL" color="#ffffffff" />
+          </TimeText>
+        </DigitalClock>
+      </BooleanOption>
+    </BooleanConfiguration>
+
+    <!-- Ambient: thin, dim, solid white (no gradient → less burn-in / power) -->
+    <DigitalClock x="0" y="80" width="450" height="150">
+      <TimeText format="h:mm" hourFormat="12" align="CENTER"
+                x="0" y="0" width="450" height="150" alpha="0">
+        <Variant mode="AMBIENT" target="alpha" value="255" />
+        <Font family="SYNC_TO_DEVICE" size="132" weight="THIN" slant="NORMAL" color="#ffd5dde8" />
+      </TimeText>
+    </DigitalClock>
+
+    <!-- ===== AM/PM, above the time (enlarged) ===== -->
+    <BooleanConfiguration id="is_korean">
+      <BooleanOption id="TRUE">
+        <PartText x="0" y="44" width="450" height="42">
+          <Text align="CENTER">
+            <Font family="SYNC_TO_DEVICE" size="48" weight="BOLD" color="#ff8fb6ff">
+              <Template>%s<Parameter expression="[HOUR_0_23] &lt; 12 ? &quot;오전&quot; : &quot;오후&quot;" /></Template>
+            </Font>
+          </Text>
+        </PartText>
+      </BooleanOption>
+      <BooleanOption id="FALSE">
+        <PartText x="0" y="44" width="450" height="42">
+          <Text align="CENTER">
+            <Font family="SYNC_TO_DEVICE" size="48" weight="BOLD" color="#ff8fb6ff">
+              <Template>%s<Parameter expression="[HOUR_0_23] &lt; 12 ? &quot;AM&quot; : &quot;PM&quot;" /></Template>
+            </Font>
+          </Text>
+        </PartText>
+      </BooleanOption>
+    </BooleanConfiguration>
+
+    <!-- ===== Bottom info cards (DATE / DAY / BATTERY) — glass style, enlarged for readability ===== -->
+    <!-- Cards: 123x106 (+10%), gap 9, centered (x = 31 / 163 / 295); top y=242, bottom edge y=348 (rounded corners keep the drawn area ~218px from center, inside the circle). -->
+    <Group x="0" y="0" width="450" height="450" name="info_cards">
+
+      <!-- Card 1: DATE -->
+      <PartDraw x="31" y="242" width="123" height="106">
+        <Variant mode="AMBIENT" target="alpha" value="0" />
+        <RoundRectangle x="0" y="0" width="123" height="106" cornerRadiusX="29" cornerRadiusY="29">
+          <Fill color="#24ffffff" />
+          <Stroke color="#1affffff" thickness="1" />
+        </RoundRectangle>
+      </PartDraw>
+      <BooleanConfiguration id="is_korean">
+        <BooleanOption id="TRUE">
+          <PartText x="31" y="258" width="123" height="20">
+            <Text align="CENTER">
+              <Font family="SYNC_TO_DEVICE" size="24" weight="BOLD" color="#ff8b93a3">날짜</Font>
+            </Text>
+          </PartText>
+          <PartText x="31" y="288" width="123" height="52">
+            <Text align="CENTER" maxLines="1">
+              <Font family="SYNC_TO_DEVICE" size="35" weight="BOLD" color="#ffffffff">
+                <Template>%d월 %d일<Parameter expression="[MONTH]" /><Parameter expression="[DAY]" /></Template>
+              </Font>
+            </Text>
+          </PartText>
+        </BooleanOption>
+        <BooleanOption id="FALSE">
+          <PartText x="31" y="258" width="123" height="20">
+            <Text align="CENTER">
+              <Font family="SYNC_TO_DEVICE" size="24" weight="BOLD" color="#ff8b93a3">DATE</Font>
+            </Text>
+          </PartText>
+          <PartText x="31" y="288" width="123" height="52">
+            <Text align="CENTER" maxLines="1">
+              <Font family="SYNC_TO_DEVICE" size="35" weight="BOLD" color="#ffffffff">
+                <Template>%s %d<Parameter expression="[MONTH] == 1 ? &quot;Jan&quot; : [MONTH] == 2 ? &quot;Feb&quot; : [MONTH] == 3 ? &quot;Mar&quot; : [MONTH] == 4 ? &quot;Apr&quot; : [MONTH] == 5 ? &quot;May&quot; : [MONTH] == 6 ? &quot;Jun&quot; : [MONTH] == 7 ? &quot;Jul&quot; : [MONTH] == 8 ? &quot;Aug&quot; : [MONTH] == 9 ? &quot;Sep&quot; : [MONTH] == 10 ? &quot;Oct&quot; : [MONTH] == 11 ? &quot;Nov&quot; : &quot;Dec&quot;" /><Parameter expression="[DAY]" /></Template>
+              </Font>
+            </Text>
+          </PartText>
+        </BooleanOption>
+      </BooleanConfiguration>
+
+      <!-- Card 2: DAY (weekday) -->
+      <PartDraw x="163" y="242" width="123" height="106">
+        <Variant mode="AMBIENT" target="alpha" value="0" />
+        <RoundRectangle x="0" y="0" width="123" height="106" cornerRadiusX="29" cornerRadiusY="29">
+          <Fill color="#24ffffff" />
+          <Stroke color="#1affffff" thickness="1" />
+        </RoundRectangle>
+      </PartDraw>
+      <BooleanConfiguration id="is_korean">
+        <BooleanOption id="TRUE">
+          <PartText x="163" y="258" width="123" height="20">
+            <Text align="CENTER">
+              <Font family="SYNC_TO_DEVICE" size="24" weight="BOLD" color="#ff8b93a3">요일</Font>
+            </Text>
+          </PartText>
+          <PartText x="163" y="288" width="123" height="52">
+            <Text align="CENTER" maxLines="1">
+              <Font family="SYNC_TO_DEVICE" size="35" weight="BOLD" color="#ff8fb6ff">
+                <Template>%s<Parameter expression="[DAY_OF_WEEK] == 1 ? &quot;월&quot; : [DAY_OF_WEEK] == 2 ? &quot;화&quot; : [DAY_OF_WEEK] == 3 ? &quot;수&quot; : [DAY_OF_WEEK] == 4 ? &quot;목&quot; : [DAY_OF_WEEK] == 5 ? &quot;금&quot; : [DAY_OF_WEEK] == 6 ? &quot;토&quot; : &quot;일&quot;" /></Template>
+              </Font>
+            </Text>
+          </PartText>
+        </BooleanOption>
+        <BooleanOption id="FALSE">
+          <PartText x="163" y="258" width="123" height="20">
+            <Text align="CENTER">
+              <Font family="SYNC_TO_DEVICE" size="24" weight="BOLD" color="#ff8b93a3">DAY</Font>
+            </Text>
+          </PartText>
+          <PartText x="163" y="288" width="123" height="52">
+            <Text align="CENTER" maxLines="1">
+              <Font family="SYNC_TO_DEVICE" size="35" weight="BOLD" color="#ff8fb6ff">
+                <Template>%s<Parameter expression="[DAY_OF_WEEK] == 1 ? &quot;Mon&quot; : [DAY_OF_WEEK] == 2 ? &quot;Tue&quot; : [DAY_OF_WEEK] == 3 ? &quot;Wed&quot; : [DAY_OF_WEEK] == 4 ? &quot;Thu&quot; : [DAY_OF_WEEK] == 5 ? &quot;Fri&quot; : [DAY_OF_WEEK] == 6 ? &quot;Sat&quot; : &quot;Sun&quot;" /></Template>
+              </Font>
+            </Text>
+          </PartText>
+        </BooleanOption>
+      </BooleanConfiguration>
+
+      <!-- Card 3: BATTERY (percent + gradient bar) -->
+      <PartDraw x="295" y="242" width="123" height="106">
+        <Variant mode="AMBIENT" target="alpha" value="0" />
+        <RoundRectangle x="0" y="0" width="123" height="106" cornerRadiusX="29" cornerRadiusY="29">
+          <Fill color="#24ffffff" />
+          <Stroke color="#1affffff" thickness="1" />
+        </RoundRectangle>
+      </PartDraw>
+      <BooleanConfiguration id="is_korean">
+        <BooleanOption id="TRUE">
+          <PartText x="295" y="256" width="123" height="20">
+            <Text align="CENTER">
+              <Font family="SYNC_TO_DEVICE" size="24" weight="BOLD" color="#ff8b93a3">배터리</Font>
+            </Text>
+          </PartText>
+        </BooleanOption>
+        <BooleanOption id="FALSE">
+          <PartText x="295" y="256" width="123" height="20">
+            <Text align="CENTER">
+              <Font family="SYNC_TO_DEVICE" size="24" weight="BOLD" color="#ff8b93a3">BATT</Font>
+            </Text>
+          </PartText>
+        </BooleanOption>
+      </BooleanConfiguration>
+      <PartText x="295" y="280" width="123" height="42">
+        <Text align="CENTER">
+          <Font family="SYNC_TO_DEVICE" size="34" weight="BOLD" color="#ff34d399">
+            <Template>%d%%<Parameter expression="[BATTERY_PERCENT]" /></Template>
+          </Font>
+        </Text>
+      </PartText>
+      <!-- Battery bar track -->
+      <PartDraw x="314" y="328" width="86" height="9">
+        <Variant mode="AMBIENT" target="alpha" value="0" />
+        <RoundRectangle x="0" y="0" width="86" height="9" cornerRadiusX="4.5" cornerRadiusY="4.5">
+          <Fill color="#33ffffff" />
+        </RoundRectangle>
+      </PartDraw>
+      <!-- Battery bar fill (width bound to battery percent) -->
+      <PartDraw x="314" y="328" width="86" height="9">
+        <Variant mode="AMBIENT" target="alpha" value="0" />
+        <RoundRectangle x="0" y="0" width="86" height="9" cornerRadiusX="4.5" cornerRadiusY="4.5">
+          <Transform target="width" value="[BATTERY_PERCENT] / 100.0 * 86" />
+          <Fill color="#ff34d399">
+            <LinearGradient startX="0" startY="0" endX="86" endY="0"
+                colors="#ff34d399 #ff6fd2ff" positions="0 1" />
+          </Fill>
+        </RoundRectangle>
+      </PartDraw>
+
+    </Group>
+
+    <!-- ===== Steps: count at the bottom (progress arc removed) ===== -->
+    <Group x="0" y="0" width="450" height="450" name="steps">
+      <!-- Step count -->
+      <BooleanConfiguration id="is_korean">
+        <BooleanOption id="TRUE">
+          <PartText x="0" y="385" width="450" height="34">
+            <Text align="CENTER" maxLines="1">
+              <Font family="SYNC_TO_DEVICE" size="32" weight="BOLD" color="#ff8b93a3">
+                <Template>%d 걸음<Parameter expression="[STEP_COUNT]" /></Template>
+              </Font>
+            </Text>
+          </PartText>
+        </BooleanOption>
+        <BooleanOption id="FALSE">
+          <PartText x="0" y="385" width="450" height="34">
+            <Text align="CENTER" maxLines="1">
+              <Font family="SYNC_TO_DEVICE" size="32" weight="BOLD" color="#ff8b93a3">
+                <Template>%d steps<Parameter expression="[STEP_COUNT]" /></Template>
+              </Font>
+            </Text>
+          </PartText>
+        </BooleanOption>
+      </BooleanConfiguration>
+    </Group>
+
+  </Scene>
+</WatchFace>

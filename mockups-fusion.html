@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galaxy Watch 6 — Fusion 디자인 (D+H+N)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #16181d; color: #e8eaed;
+    font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+    padding: 40px 20px; display: flex; flex-direction: column; align-items: center;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .sub { color: #9aa0a6; font-size: 14px; margin-bottom: 36px; text-align:center; max-width:680px; line-height:1.6;}
+  .grid { display: flex; flex-wrap: wrap; gap: 48px 64px; justify-content: center; max-width: 1200px; }
+  .item { display: flex; flex-direction: column; align-items: center; }
+  .label { margin-top: 18px; font-size: 15px; font-weight: 600; }
+  .desc  { margin-top: 6px; font-size: 12.5px; color: #9aa0a6; max-width: 300px; text-align: center; line-height: 1.5; }
+
+  .watch {
+    width: 360px; height: 360px; border-radius: 50%; background: #000; position: relative;
+    box-shadow: 0 0 0 10px #2a2c31, 0 0 0 13px #3a3d44, 0 16px 44px rgba(0,0,0,.65); overflow: hidden;
+  }
+  .face { position: absolute; inset: 0; }
+  .mono { font-variant-numeric: tabular-nums; letter-spacing: -2px; }
+
+  /* ===================== O1 — Gradient + Glass Cards ===================== */
+  .o1 { background: radial-gradient(120% 120% at 50% 0%, #122a45 0%, #060810 58%, #000 100%); }
+  .o1 .top { height: 56%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top:16px;}
+  .o1 .ampmrow { display:flex; align-items:baseline; gap:10px; }
+  .o1 .time { font-size: 118px; font-weight: 800; line-height:.86;
+    background: linear-gradient(135deg, #6fd2ff 0%, #a78bfa 55%, #f0abfc 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter: drop-shadow(0 2px 10px rgba(120,160,255,.25)); }
+  .o1 .ampm { font-size: 24px; font-weight: 700; color:#8fb6ff; letter-spacing:1px; }
+  .o1 .cards { position:absolute; bottom:42px; left:0; right:0; display:flex; gap:10px; justify-content:center; padding:0 46px; }
+  .o1 .card {
+    flex:1; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
+    border-radius:18px; padding:11px 6px 13px; text-align:center;
+    backdrop-filter: blur(6px); box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .o1 .card .k{ font-size:10.5px; color:#8b93a3; letter-spacing:1.5px; font-weight:600; }
+  .o1 .card .v{ font-size:20px; font-weight:700; color:#fff; margin-top:3px; }
+  .o1 .card .v.day{ background:linear-gradient(135deg,#6fd2ff,#a78bfa); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  /* 배터리 카드: 미니 막대 포함 */
+  .o1 .card .bbar{ height:4px; border-radius:2px; background:rgba(255,255,255,.12); margin:7px 10px 0; position:relative;}
+  .o1 .card .bbar i{ position:absolute; left:0; top:0; bottom:0; width:68%; border-radius:2px; background:linear-gradient(90deg,#34d399,#6fd2ff);}
+  .o1 .card .v.bt{ color:#34d399; }
+
+  /* ===================== O2 — Gradient + Battery Arc + Pill Panel ===================== */
+  .o2 { background: radial-gradient(120% 120% at 50% 12%, #2a1340 0%, #0a0612 60%, #000 100%); }
+  .o2 svg{ position:absolute; inset:0; }
+  .o2 .top { position:absolute; top:0; left:0; right:0; height:60%; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .o2 .ampm { font-size:20px; font-weight:700; letter-spacing:3px; margin-bottom:2px;
+    background:linear-gradient(90deg,#f0abfc,#a78bfa); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .o2 .time { font-size:116px; font-weight:800; line-height:.86;
+    background:linear-gradient(135deg,#f5b8ff 0%, #b794f6 50%, #7dd3fc 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .o2 .panel { position:absolute; bottom:46px; left:50%; transform:translateX(-50%);
+    display:flex; align-items:center; gap:14px; padding:11px 20px; border-radius:999px;
+    background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.10); backdrop-filter:blur(6px); }
+  .o2 .panel .seg{ display:flex; flex-direction:column; align-items:center; }
+  .o2 .panel .seg .k{ font-size:9.5px; color:#8b93a3; letter-spacing:1.5px; font-weight:600;}
+  .o2 .panel .seg .v{ font-size:18px; font-weight:700; color:#fff; margin-top:2px;}
+  .o2 .panel .divider{ width:1px; height:26px; background:rgba(255,255,255,.12);}
+  .o2 .battxt{ position:absolute; top:42px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; color:#7dd3fc; letter-spacing:1px;}
+</style>
+</head>
+<body>
+  <h1>Galaxy Watch 6 · Fusion 디자인 — D + H + N 접목</h1>
+  <div class="sub">상단 그라데이션 대형 시간(N) + 하단 글래스 정보 패널(H) + 카드형 날짜/요일/배터리(D).
+  최신 워치페이스 트렌드인 글래스모피즘과 그라데이션 타이포를 적용했습니다. (예시 10:08 PM · 배터리 68%)</div>
+
+  <div class="grid">
+
+    <!-- O1 -->
+    <div class="item">
+      <div class="watch"><div class="face o1">
+        <div class="top">
+          <div class="ampmrow">
+            <div class="time mono">10:08</div>
+          </div>
+          <div class="ampm">PM</div>
+        </div>
+        <div class="cards">
+          <div class="card"><div class="k">DATE</div><div class="v">JUN 29</div></div>
+          <div class="card"><div class="k">DAY</div><div class="v day">MON</div></div>
+          <div class="card"><div class="k">BATTERY</div><div class="v bt">68%</div><div class="bbar"><i></i></div></div>
+        </div>
+      </div></div>
+      <div class="label">O1. Gradient Glass Cards</div>
+      <div class="desc">그라데이션 대형 시간 + 하단 3장의 글래스 카드(날짜·요일·배터리). 배터리 카드엔 미니 막대 포함. 가장 정보 정돈형.</div>
+    </div>
+
+    <!-- O2 -->
+    <div class="item">
+      <div class="watch"><div class="face o2">
+        <svg width="360" height="360" viewBox="0 0 360 360">
+          <circle cx="180" cy="180" r="168" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="7"/>
+          <defs>
+            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#7dd3fc"/><stop offset="1" stop-color="#f0abfc"/>
+            </linearGradient>
+          </defs>
+          <circle cx="180" cy="180" r="168" fill="none" stroke="url(#g2)" stroke-width="7"
+            stroke-linecap="round" stroke-dasharray="1055.6" stroke-dashoffset="337.8"
+            transform="rotate(-90 180 180)"/>
+        </svg>
+        <div class="battxt">⚡ 68%</div>
+        <div class="top">
+          <div class="ampm">PM</div>
+          <div class="time mono">10:08</div>
+        </div>
+        <div class="panel">
+          <div class="seg"><div class="k">DATE</div><div class="v">JUN 29</div></div>
+          <div class="divider"></div>
+          <div class="seg"><div class="k">DAY</div><div class="v">MON</div></div>
+        </div>
+      </div></div>
+      <div class="label">O2. Gradient Arc + Pill</div>
+      <div class="desc">배터리를 외곽 그라데이션 호(68%)로, 날짜·요일은 하단 알약형 글래스 패널로. 화면을 꽉 쓰는 가장 모던한 스타일.</div>
+    </div>
+
+  </div>
+</body>
+</html>

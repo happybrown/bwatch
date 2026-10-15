@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galaxy Watch 6 — 디지털 워치페이스 목업</title>
+<style>
+  :root { --bezel: #111; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1b1d22;
+    color: #e8eaed;
+    font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .sub { color: #9aa0a6; font-size: 14px; margin-bottom: 36px; }
+  .grid {
+    display: flex; flex-wrap: wrap; gap: 48px 64px;
+    justify-content: center; max-width: 1300px;
+  }
+  .item { display: flex; flex-direction: column; align-items: center; }
+  .label { margin-top: 18px; font-size: 15px; font-weight: 600; }
+  .desc  { margin-top: 6px; font-size: 12.5px; color: #9aa0a6; max-width: 260px; text-align: center; line-height: 1.5; }
+
+  /* 워치 본체 — 원형 AMOLED 480x480, 화면에선 0.7배 축소 */
+  .watch {
+    width: 336px; height: 336px;     /* 480 * 0.7 */
+    border-radius: 50%;
+    background: #000;
+    position: relative;
+    box-shadow: 0 0 0 10px #2a2c31, 0 0 0 13px #3a3d44, 0 14px 40px rgba(0,0,0,.6);
+    overflow: hidden;
+  }
+  .face { position: absolute; inset: 0; display: flex; flex-direction: column;
+          align-items: center; justify-content: center; }
+
+  /* 공통 타이포 — 선명도 위해 굵고 큰 산세리프 */
+  .mono { font-variant-numeric: tabular-nums; letter-spacing: -1px; }
+
+  /* ---------- A. BIG BOLD ---------- */
+  .a .time { font-size: 116px; font-weight: 800; line-height: .9; color: #fff; }
+  .a .ampm { font-size: 26px; font-weight: 700; color: #4dd0e1; margin-top: 4px; letter-spacing: 2px; }
+  .a .date { font-size: 21px; font-weight: 600; color: #c2c6cc; margin-top: 14px; }
+  .a .batt { position: absolute; top: 46px; display: flex; align-items: center; gap: 7px; font-size: 17px; font-weight: 600; color: #9be29b; }
+  .a .bicon { width: 26px; height: 14px; border: 2px solid #9be29b; border-radius: 3px; position: relative; }
+  .a .bicon::after { content:""; position:absolute; right:-4px; top:3px; width:3px; height:6px; background:#9be29b; border-radius:0 2px 2px 0;}
+  .a .bfill { position:absolute; left:1.5px; top:1.5px; bottom:1.5px; width:68%; background:#9be29b; border-radius:1px;}
+
+  /* ---------- B. STACKED / ACCENT BAR ---------- */
+  .b .time { font-size: 132px; font-weight: 900; line-height: .82; color:#fff; }
+  .b .row  { display:flex; align-items:flex-end; gap:10px; }
+  .b .ampm { font-size: 22px; font-weight:800; color:#ffb74d; margin-bottom:18px; letter-spacing:1px;}
+  .b .bar  { width: 150px; height: 4px; background:#333; border-radius:2px; margin-top:18px; position:relative;}
+  .b .bar i{ position:absolute; left:0; top:0; bottom:0; width:68%; background:#ffb74d; border-radius:2px;}
+  .b .date { font-size: 19px; font-weight:600; color:#c2c6cc; margin-top:14px; }
+  .b .pct  { font-size: 14px; color:#9aa0a6; margin-top:6px; }
+
+  /* ---------- C. RING (배터리 외곽 링) ---------- */
+  .c svg { position:absolute; inset:0; }
+  .c .time { font-size: 104px; font-weight:800; color:#fff; line-height:.9; z-index:2;}
+  .c .ampm { font-size: 22px; font-weight:700; color:#7ee0ff; letter-spacing:2px; margin-top:2px; z-index:2;}
+  .c .date { font-size: 19px; font-weight:600; color:#c2c6cc; margin-top:12px; z-index:2;}
+  .c .pct  { position:absolute; bottom:40px; font-size:15px; font-weight:600; color:#7ee0ff; z-index:2;}
+
+  /* ---------- D. GRID / CARD (정보형) ---------- */
+  .d .top { font-size: 16px; font-weight:600; color:#9aa0a6; letter-spacing:3px; margin-bottom:6px;}
+  .d .time { font-size: 100px; font-weight:800; color:#fff; line-height:.9;}
+  .d .ampm { font-size:22px; color:#ba9bff; font-weight:700;}
+  .d .cards{ display:flex; gap:10px; margin-top:20px;}
+  .d .card { background:#15171c; border:1px solid #262a31; border-radius:14px; padding:9px 14px; text-align:center; min-width:78px;}
+  .d .card .k{ font-size:11px; color:#8c93a0; letter-spacing:1px;}
+  .d .card .v{ font-size:19px; font-weight:700; color:#fff; margin-top:2px;}
+  .d .card .v.bt{ color:#9be29b;}
+</style>
+</head>
+<body>
+  <h1>Galaxy Watch 6 · 디지털 워치페이스 목업</h1>
+  <div class="sub">원형 AMOLED 기준 · 검정 배경 + 고대비 글자 · 4가지 스타일 비교 (예시 시각 10:08 PM)</div>
+
+  <div class="grid">
+
+    <!-- A -->
+    <div class="item">
+      <div class="watch"><div class="face a">
+        <div class="batt"><span class="bicon"><span class="bfill"></span></span>68%</div>
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="date">MON · JUN 29</div>
+      </div></div>
+      <div class="label">A. Big Bold</div>
+      <div class="desc">시간을 최대 크기로. 가독성 최우선. 배터리는 상단 아이콘, 날짜·요일은 하단 한 줄.</div>
+    </div>
+
+    <!-- B -->
+    <div class="item">
+      <div class="watch"><div class="face b">
+        <div class="row"><div class="time mono">10:08</div><div class="ampm">PM</div></div>
+        <div class="bar"><i></i></div>
+        <div class="date">월요일 · 6월 29일</div>
+        <div class="pct">배터리 68%</div>
+      </div></div>
+      <div class="label">B. Accent Bar</div>
+      <div class="desc">가장 큰 시간 + 포인트 컬러 배터리 막대. 한글 요일/날짜 표시 버전.</div>
+    </div>
+
+    <!-- C -->
+    <div class="item">
+      <div class="watch"><div class="face c">
+        <svg width="336" height="336" viewBox="0 0 336 336">
+          <circle cx="168" cy="168" r="158" fill="none" stroke="#1c1f25" stroke-width="8"/>
+          <circle cx="168" cy="168" r="158" fill="none" stroke="#7ee0ff" stroke-width="8"
+                  stroke-linecap="round" stroke-dasharray="992.7" stroke-dashoffset="317.6"
+                  transform="rotate(-90 168 168)"/>
+        </svg>
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="date">MON, JUN 29</div>
+        <div class="pct">68%</div>
+      </div></div>
+      <div class="label">C. Battery Ring</div>
+      <div class="desc">배터리를 외곽 원형 링으로 시각화(68%만큼 채움). 화면을 꽉 쓰는 모던 스타일.</div>
+    </div>
+
+    <!-- D -->
+    <div class="item">
+      <div class="watch"><div class="face d">
+        <div class="top">10:08 PM</div>
+        <div class="time mono">10:08</div>
+        <div class="cards">
+          <div class="card"><div class="k">DATE</div><div class="v">6/29</div></div>
+          <div class="card"><div class="k">DAY</div><div class="v">MON</div></div>
+          <div class="card"><div class="k">BATT</div><div class="v bt">68%</div></div>
+        </div>
+      </div></div>
+      <div class="label">D. Info Cards</div>
+      <div class="desc">정보를 카드로 정돈. 날짜/요일/배터리가 또렷하게 분리되어 한눈에 들어옴.</div>
+    </div>
+
+  </div>
+</body>
+</html>

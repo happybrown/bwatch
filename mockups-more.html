@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galaxy Watch 6 — 추가 목업 (E~N)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1b1d22; color: #e8eaed;
+    font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+    padding: 40px 20px; display: flex; flex-direction: column; align-items: center;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .sub { color: #9aa0a6; font-size: 14px; margin-bottom: 36px; }
+  .grid { display: flex; flex-wrap: wrap; gap: 48px 64px; justify-content: center; max-width: 1300px; }
+  .item { display: flex; flex-direction: column; align-items: center; }
+  .label { margin-top: 18px; font-size: 15px; font-weight: 600; }
+  .desc  { margin-top: 6px; font-size: 12.5px; color: #9aa0a6; max-width: 270px; text-align: center; line-height: 1.5; }
+
+  .watch {
+    width: 336px; height: 336px; border-radius: 50%; background: #000; position: relative;
+    box-shadow: 0 0 0 10px #2a2c31, 0 0 0 13px #3a3d44, 0 14px 40px rgba(0,0,0,.6); overflow: hidden;
+  }
+  .face { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .mono { font-variant-numeric: tabular-nums; letter-spacing: -1px; }
+
+  /* E. 7-Segment LCD */
+  .e { background: radial-gradient(circle at 50% 40%, #0b1410 0%, #000 70%); }
+  .e .time { font-family: "DSEG7 Classic", "Courier New", monospace; font-size: 92px; font-weight: 700; color:#39ff14; text-shadow:0 0 8px rgba(57,255,20,.5); letter-spacing:4px; }
+  .e .ampm { font-size: 22px; font-weight:700; color:#39ff14; margin-top:6px; letter-spacing:3px; }
+  .e .date { font-size:18px; color:#7ad96a; margin-top:14px; font-family:"Courier New",monospace; letter-spacing:2px; }
+  .e .batt { position:absolute; top:48px; font-size:16px; color:#7ad96a; font-family:"Courier New",monospace; letter-spacing:2px;}
+
+  /* F. Thin Elegant Outline */
+  .f .time { font-size:118px; font-weight:200; color:#fff; line-height:.9; }
+  .f .ampm { font-size:20px; font-weight:300; color:#d0a8ff; letter-spacing:5px; margin-top:4px;}
+  .f .date { font-size:16px; font-weight:300; color:#a8adb4; letter-spacing:4px; margin-top:16px;}
+  .f .batt { position:absolute; top:50px; font-size:14px; font-weight:300; color:#a8adb4; letter-spacing:3px;}
+
+  /* G. Right-aligned asymmetric */
+  .g .face { align-items:flex-end; padding-right:42px; justify-content:center;}
+  .g .small{ font-size:15px; color:#ff8a65; letter-spacing:2px; font-weight:600;}
+  .g .time { font-size:112px; font-weight:800; color:#fff; line-height:.85;}
+  .g .ampm { font-size:24px; font-weight:700; color:#ff8a65;}
+  .g .date { font-size:17px; color:#bfc4ca; margin-top:10px; font-weight:600;}
+  .g .batt { font-size:14px; color:#9be29b; margin-top:6px;}
+
+  /* H. Split panel */
+  .h .face { justify-content:flex-start;}
+  .h .top  { height:60%; width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+  .h .time { font-size:104px; font-weight:800; color:#fff; line-height:.9;}
+  .h .ampm { font-size:20px; font-weight:700; color:#4dd0e1; letter-spacing:2px;}
+  .h .bottom{ position:absolute; bottom:0; height:38%; width:100%; background:#0e1117; border-top:1px solid #222; display:flex; align-items:center; justify-content:space-around; padding:0 50px 20px;}
+  .h .bottom div{ text-align:center;} .h .bottom .k{ font-size:11px; color:#8c93a0; letter-spacing:1px;} .h .bottom .v{ font-size:18px; font-weight:700; color:#fff; margin-top:3px;} .h .bottom .v.b{color:#9be29b;}
+
+  /* I. Dot battery */
+  .i .time { font-size:114px; font-weight:800; color:#fff; line-height:.9;}
+  .i .ampm { font-size:22px; font-weight:700; color:#ffd54f; letter-spacing:2px; margin-top:2px;}
+  .i .dots { display:flex; gap:7px; margin-top:16px;}
+  .i .dots span{ width:11px; height:11px; border-radius:50%; background:#333;}
+  .i .dots span.on{ background:#ffd54f;}
+  .i .date { font-size:17px; color:#bfc4ca; margin-top:12px; font-weight:600;}
+
+  /* J. Vertical stacked HH/MM */
+  .j .time { font-size:130px; font-weight:900; color:#fff; line-height:.78;}
+  .j .ampm { position:absolute; top:70px; right:80px; font-size:22px; font-weight:700; color:#81c784;}
+  .j .date { font-size:16px; color:#bfc4ca; margin-top:18px; letter-spacing:2px; font-weight:600;}
+  .j .batt { position:absolute; bottom:54px; font-size:14px; color:#81c784;}
+
+  /* K. Neon glow */
+  .k { background: radial-gradient(circle at 50% 50%, #14001f 0%, #000 75%); }
+  .k .time { font-size:112px; font-weight:800; color:#fff; line-height:.9; text-shadow:0 0 12px #e040fb, 0 0 24px rgba(224,64,251,.6);}
+  .k .ampm { font-size:22px; font-weight:700; color:#e040fb; letter-spacing:3px; text-shadow:0 0 8px #e040fb; margin-top:4px;}
+  .k .date { font-size:17px; color:#67e8f9; margin-top:14px; font-weight:600; text-shadow:0 0 8px rgba(103,232,249,.6);}
+  .k .batt { position:absolute; top:48px; font-size:15px; color:#67e8f9; text-shadow:0 0 6px rgba(103,232,249,.6);}
+
+  /* L. Dot-matrix minimal */
+  .l .time { font-size:96px; font-weight:700; color:#cfd8dc; line-height:.9; letter-spacing:2px; font-family:"Courier New",monospace;}
+  .l .ampm { font-size:18px; color:#90a4ae; letter-spacing:4px; margin-top:8px; font-family:"Courier New",monospace;}
+  .l .date { font-size:15px; color:#78909c; margin-top:14px; letter-spacing:3px; font-family:"Courier New",monospace;}
+  .l .batt { position:absolute; top:54px; font-size:13px; color:#78909c; letter-spacing:2px; font-family:"Courier New",monospace;}
+
+  /* M. Tick ring + digital center */
+  .m .ticks{ position:absolute; inset:0;}
+  .m .time { font-size:98px; font-weight:800; color:#fff; line-height:.9; z-index:2;}
+  .m .ampm { font-size:20px; font-weight:700; color:#ffb300; letter-spacing:2px; z-index:2;}
+  .m .date { font-size:16px; color:#bfc4ca; margin-top:12px; font-weight:600; z-index:2;}
+  .m .batt { position:absolute; bottom:46px; font-size:14px; color:#ffb300; z-index:2;}
+
+  /* N. Gradient card */
+  .n { background: linear-gradient(160deg, #0a1f3a 0%, #000 60%); }
+  .n .time { font-size:112px; font-weight:800; line-height:.9; background:linear-gradient(90deg,#4fc3f7,#b388ff); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .n .ampm { font-size:22px; font-weight:700; color:#4fc3f7; letter-spacing:2px; margin-top:2px;}
+  .n .date { font-size:17px; color:#cfd8e8; margin-top:14px; font-weight:600;}
+  .n .batt { position:absolute; top:48px; display:flex; align-items:center; gap:6px; font-size:15px; color:#b388ff; font-weight:600;}
+</style>
+</head>
+<body>
+  <h1>Galaxy Watch 6 · 추가 목업 (E ~ N)</h1>
+  <div class="sub">원형 AMOLED 기준 · 예시 시각 10:08 PM · 배터리 68%</div>
+
+  <div class="grid">
+
+    <div class="item">
+      <div class="watch"><div class="face e">
+        <div class="batt">BATT 68%</div>
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="date">MON 06-29</div>
+      </div></div>
+      <div class="label">E. 7-Segment LCD</div>
+      <div class="desc">계산기·전자시계 느낌의 7세그먼트 글꼴 + 녹색 발광. 레트로 디지털 감성.</div>
+    </div>
+
+    <div class="item">
+      <div class="watch"><div class="face f">
+        <div class="batt">BATTERY 68%</div>
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="date">MON · JUN 29</div>
+      </div></div>
+      <div class="label">F. Thin Elegant</div>
+      <div class="desc">얇은 굵기 + 넓은 자간으로 고급스럽고 모던. 미니멀 선호 시 추천.</div>
+    </div>
+
+    <div class="item">
+      <div class="watch"><div class="face g">
+        <div class="small">10:08 PM</div>
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="date">MON · JUN 29</div>
+        <div class="batt">▮ 68%</div>
+      </div></div>
+      <div class="label">G. Right Aligned</div>
+      <div class="desc">우측 정렬 비대칭 레이아웃. 시선이 한쪽으로 모여 개성 있고 또렷.</div>
+    </div>
+
+    <div class="item">
+      <div class="watch"><div class="face h">
+        <div class="top">
+          <div class="time mono">10:08</div>
+          <div class="ampm">PM</div>
+        </div>
+        <div class="bottom">
+          <div><div class="k">DATE</div><div class="v">JUN 29</div></div>
+          <div><div class="k">DAY</div><div class="v">MON</div></div>
+          <div><div class="k">BATT</div><div class="v b">68%</div></div>
+        </div>
+      </div></div>
+      <div class="label">H. Split Panel</div>
+      <div class="desc">상단 시간 / 하단 정보 패널 분리. 정보가 구획되어 매우 또렷하게 정돈.</div>
+    </div>
+
+    <div class="item">
+      <div class="watch"><div class="face i">
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="dots"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span></span></div>
+        <div class="date">MON · JUN 29</div>
+      </div></div>
+      <div class="label">I. Dot Battery</div>
+      <div class="desc">배터리를 10개 점으로 표시(7/10 = 약 68%). 직관적이고 깔끔.</div>
+    </div>
+
+    <div class="item">
+      <div class="watch"><div class="face j">
+        <div class="ampm">PM</div>
+        <div class="time mono" style="display:flex;flex-direction:column;align-items:center;"><span>10</span><span>08</span></div>
+        <div class="date">MON · JUN 29</div>
+        <div class="batt">▮ 68%</div>
+      </div></div>
+      <div class="label">J. Vertical Stack</div>
+      <div class="desc">시(HH)와 분(MM)을 위아래로 쌓아 글자를 초대형으로. 임팩트 최대.</div>
+    </div>
+
+    <div class="item">
+      <div class="watch"><div class="face k">
+        <div class="batt">⚡ 68%</div>
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="date">MON · JUN 29</div>
+      </div></div>
+      <div class="label">K. Neon Glow</div>
+      <div class="desc">네온 발광 효과. 화려하고 눈에 띔. (상시표시 모드에선 발광 약화)</div>
+    </div>
+
+    <div class="item">
+      <div class="watch"><div class="face l">
+        <div class="batt">[####### ] 68%</div>
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="date">MON JUN 29</div>
+      </div></div>
+      <div class="label">L. Dot-Matrix</div>
+      <div class="desc">모노스페이스 + 텍스트 배터리 바. 터미널·테크 감성의 절제된 디자인.</div>
+    </div>
+
+    <div class="item">
+      <div class="watch"><div class="face m">
+        <svg class="ticks" width="336" height="336" viewBox="0 0 336 336">
+          <g stroke="#2a2d33" stroke-width="2">
+            <!-- 60 ticks -->
+            <g id="t"></g>
+          </g>
+          <circle cx="168" cy="168" r="150" fill="none" stroke="#ffb300" stroke-width="5" stroke-linecap="round" stroke-dasharray="942.5" stroke-dashoffset="301.6" transform="rotate(-90 168 168)" opacity=".9"/>
+        </svg>
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="date">MON · JUN 29</div>
+        <div class="batt">68%</div>
+      </div></div>
+      <div class="label">M. Tick Ring</div>
+      <div class="desc">아날로그 눈금 테두리 + 디지털 중앙. 배터리는 외곽 호로 표시. 전통+현대 혼합.</div>
+    </div>
+
+    <div class="item">
+      <div class="watch"><div class="face n">
+        <div class="batt">◈ 68%</div>
+        <div class="time mono">10:08</div>
+        <div class="ampm">PM</div>
+        <div class="date">MON · JUN 29</div>
+      </div></div>
+      <div class="label">N. Gradient</div>
+      <div class="desc">시간 글자에 블루→퍼플 그라데이션. 컬러풀하면서도 가독성 유지.</div>
+    </div>
+
+  </div>
+
+  <script>
+    // M 디자인 눈금 생성
+    var g = document.getElementById('t');
+    if (g) {
+      for (var i=0;i<60;i++){
+        var a = (i/60)*2*Math.PI;
+        var r1 = i%5===0 ? 132 : 140, r2 = 150;
+        var x1 = 168 + r1*Math.sin(a), y1 = 168 - r1*Math.cos(a);
+        var x2 = 168 + r2*Math.sin(a), y2 = 168 - r2*Math.cos(a);
+        var l = document.createElementNS('http://www.w3.org/2000/svg','line');
+        l.setAttribute('x1',x1); l.setAttribute('y1',y1);
+        l.setAttribute('x2',x2); l.setAttribute('y2',y2);
+        l.setAttribute('stroke', i%5===0 ? '#555' : '#2a2d33');
+        l.setAttribute('stroke-width', i%5===0 ? 3 : 2);
+        g.appendChild(l);
+      }
+    }
+  </script>
+</body>
+</html>

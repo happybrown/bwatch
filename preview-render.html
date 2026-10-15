@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:450px;height:450px;overflow:hidden;background:#000;}
+  .face{width:450px;height:450px;position:relative;border-radius:50%;
+    background:radial-gradient(360px 360px at 225px 70px,#15233b 0%,#080b13 55%,#000 100%);
+    font-family:-apple-system,"Helvetica Neue",Roboto,sans-serif;}
+  .time{position:absolute;top:120px;left:0;width:450px;height:150px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:132px;font-weight:800;color:#fff;letter-spacing:-4px;
+    font-variant-numeric:tabular-nums;}
+  .ampm{position:absolute;top:252px;left:0;width:450px;text-align:center;
+    font-size:28px;font-weight:700;color:#8fb6ff;}
+  .cards{position:absolute;top:286px;left:72px;width:306px;height:74px;display:flex;gap:9px;}
+  .card{width:96px;height:74px;border-radius:20px;background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.10);display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-start;padding-top:12px;}
+  .k{font-size:13px;font-weight:700;color:#8b93a3;}
+  .v{font-size:23px;font-weight:800;color:#fff;margin-top:5px;}
+  .v.day{color:#8fb6ff;}
+  .v.bt{color:#34d399;font-size:22px;margin-top:3px;}
+  .bbar{width:68px;height:6px;border-radius:3px;background:rgba(255,255,255,.2);
+    margin-top:7px;position:relative;}
+  .bbar i{position:absolute;left:0;top:0;bottom:0;width:68%;border-radius:3px;
+    background:linear-gradient(90deg,#34d399,#6fd2ff);}
+</style></head><body>
+  <div class="face">
+    <div class="time">10:08</div>
+    <div class="ampm">PM</div>
+    <div class="cards">
+      <div class="card"><div class="k">DATE</div><div class="v">Jun 29</div></div>
+      <div class="card"><div class="k">DAY</div><div class="v day">Mon</div></div>
+      <div class="card"><div class="k">BATT</div><div class="v bt">68%</div><div class="bbar"><i></i></div></div>
+    </div>
+  </div>
+</body></html>

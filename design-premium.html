@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galaxy Watch 6 · Premium Design Concepts</title>
+<style>
+  :root{
+    --ink:#ffffff; --ink-2:#aab2bf; --ink-3:#6b7280;
+    --amber:#ffb454; --cyan:#66e0ff; --violet:#b19bff; --mint:#5fe3b3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#0e0f12;color:#e8eaed;
+    font-family:-apple-system,"SF Pro Display","Segoe UI",Roboto,"Noto Sans KR",sans-serif;
+    padding:48px 24px 80px;display:flex;flex-direction:column;align-items:center;}
+  h1{font-size:24px;font-weight:600;letter-spacing:-.3px;}
+  .lede{color:#9aa0a6;font-size:14px;margin:8px 0 44px;max-width:720px;text-align:center;line-height:1.65;}
+  .grid{display:flex;flex-wrap:wrap;gap:64px 80px;justify-content:center;max-width:1180px;}
+  .item{display:flex;flex-direction:column;align-items:center;width:392px;}
+  .name{margin-top:22px;font-size:17px;font-weight:650;letter-spacing:.2px;}
+  .tag{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:2.5px;margin-top:3px;}
+  .note{margin-top:12px;font-size:13px;color:#9aa0a6;line-height:1.6;text-align:center;}
+  .note b{color:#cdd2d8;font-weight:600;}
+
+  /* ---- device ---- */
+  .stage{width:392px;height:392px;position:relative;}
+  .watch{width:480px;height:480px;border-radius:50%;background:#000;position:absolute;top:0;left:0;
+    transform:scale(.81667);transform-origin:top left;overflow:hidden;
+    box-shadow:0 0 0 14px #212327,0 0 0 18px #34373d,0 22px 60px rgba(0,0,0,.7);}
+  .face{position:absolute;inset:0;}
+  .tab{font-variant-numeric:tabular-nums;}
+  svg{position:absolute;inset:0;}
+
+  /* ============ 1 · MERIDIAN ============ */
+  .meridian{background:radial-gradient(130% 120% at 50% 42%,#101216 0%,#000 72%);}
+  .m-batt{position:absolute;top:70px;left:0;width:480px;text-align:center;
+    font-size:19px;font-weight:600;letter-spacing:3px;color:var(--ink-2);}
+  .m-track{position:absolute;top:104px;left:190px;width:100px;height:2px;background:#26292f;border-radius:2px;}
+  .m-track i{position:absolute;left:0;top:0;bottom:0;width:84%;background:var(--ink-2);border-radius:2px;}
+  .m-time{position:absolute;top:168px;left:0;width:480px;text-align:center;line-height:1;
+    font-size:170px;font-weight:250;letter-spacing:-6px;color:var(--ink);}
+  .m-time .c{color:var(--amber);font-weight:300;margin:0 -6px;}
+  .m-time .mm{color:#c9ced6;font-weight:250;}
+  .m-ampm{position:absolute;top:196px;left:352px;font-size:22px;font-weight:600;
+    letter-spacing:3px;color:var(--amber);}
+  .m-date{position:absolute;bottom:96px;left:0;width:480px;text-align:center;
+    font-size:20px;font-weight:600;letter-spacing:5px;color:var(--ink-3);}
+
+  /* ============ 2 · HALO ============ */
+  .halo{background:radial-gradient(120% 120% at 50% 50%,#0a1014 0%,#000 78%);}
+  .h-ampm{position:absolute;top:120px;left:0;width:480px;text-align:center;
+    font-size:20px;font-weight:700;letter-spacing:2px;color:var(--mint);}
+  .h-time{position:absolute;top:150px;left:0;width:480px;text-align:center;line-height:1;
+    font-size:150px;font-weight:700;letter-spacing:-5px;color:var(--ink);}
+  .h-batt{position:absolute;top:322px;left:0;width:480px;text-align:center;
+    font-size:17px;font-weight:600;letter-spacing:2px;color:var(--mint);}
+
+  /* ============ 3 · STRATA ============ */
+  .strata{background:linear-gradient(180deg,#0c0f14 0%,#000 60%);}
+  .s-time{position:absolute;top:120px;left:0;width:480px;text-align:center;line-height:1;
+    font-size:150px;font-weight:750;letter-spacing:-5px;color:#fff;
+    text-shadow:0 3px 30px rgba(120,160,255,.18);}
+  .s-ampm{position:absolute;top:150px;left:356px;font-size:24px;font-weight:700;color:var(--cyan);letter-spacing:1px;}
+  .s-tray{position:absolute;left:0;bottom:0;width:480px;height:150px;
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+    border-top:1px solid rgba(255,255,255,.10);
+    display:flex;align-items:flex-start;justify-content:center;gap:0;padding-top:26px;}
+  .s-cell{width:118px;text-align:center;position:relative;}
+  .s-cell+.s-cell::before{content:"";position:absolute;left:0;top:2px;height:40px;width:1px;background:rgba(255,255,255,.10);}
+  .s-k{font-size:12px;letter-spacing:2.5px;color:var(--ink-3);font-weight:600;}
+  .s-v{font-size:26px;font-weight:700;color:#fff;margin-top:7px;}
+  .s-v.acc{color:var(--cyan);}
+  .s-v.mint{color:var(--mint);}
+
+  /* ============ 4 · AURORA ============ */
+  .aurora{background:#000;}
+  .a-bloom{position:absolute;left:50%;top:56%;width:520px;height:360px;transform:translate(-50%,-50%);
+    background:radial-gradient(closest-side,rgba(104,130,255,.62),rgba(180,120,255,.30) 45%,rgba(0,0,0,0) 72%);
+    filter:blur(26px);}
+  .a-bloom2{position:absolute;left:50%;top:60%;width:360px;height:240px;transform:translate(-50%,-50%);
+    background:radial-gradient(closest-side,rgba(80,230,190,.40),rgba(0,0,0,0) 70%);filter:blur(30px);}
+  .a-top{position:absolute;top:100px;left:0;width:480px;text-align:center;
+    font-size:19px;font-weight:600;letter-spacing:4px;color:#c8ccd3;}
+  .a-time{position:absolute;top:150px;left:0;width:480px;text-align:center;line-height:1;
+    font-size:140px;font-weight:800;letter-spacing:-5px;color:#fff;}
+  .a-ampm{position:absolute;top:298px;left:0;width:480px;text-align:center;
+    font-size:22px;font-weight:700;color:#c9b8ff;letter-spacing:3px;}
+  .a-bar{position:absolute;top:348px;left:152px;width:176px;height:6px;border-radius:4px;
+    background:rgba(255,255,255,.16);overflow:hidden;}
+  .a-bar i{position:absolute;left:0;top:0;bottom:0;width:84%;border-radius:4px;
+    background:linear-gradient(90deg,#5fe3b3,#66e0ff,#b19bff);}
+  .a-batt{position:absolute;top:364px;left:0;width:480px;text-align:center;font-size:15px;
+    font-weight:600;color:#aab2bf;letter-spacing:2px;}
+</style>
+</head>
+<body>
+  <h1>Galaxy Watch 6 · Premium Design System</h1>
+  <div class="lede">진짜 시계처럼 — <b>0.3초 글랜서빌리티</b>, 원형을 자산으로, 순수 블랙 위 정밀 타이포.
+  한 화면에 하나의 강조색. 예시 10:08 PM · 배터리 84% · 7월 1일 화요일.</div>
+
+  <div class="grid">
+
+    <!-- 1 MERIDIAN -->
+    <div class="item">
+      <div class="stage"><div class="watch"><div class="face meridian">
+        <div class="m-batt">84%</div>
+        <div class="m-track"><i></i></div>
+        <div class="m-time tab"><span>10</span><span class="c">:</span><span class="mm">08</span></div>
+        <div class="m-ampm">PM</div>
+        <div class="m-date">TUE · 01 JUL</div>
+      </div></div></div>
+      <div class="name">1 · Meridian</div>
+      <div class="tag">Editorial minimal</div>
+      <div class="note"><b>스위스 편집 디자인.</b> 얇은 초대형 숫자 + 앰버 콜론 하나가 유일한 강조.
+      배터리는 상단 헤어라인 게이지로 절제. 여백이 곧 고급.</div>
+    </div>
+
+    <!-- 2 HALO -->
+    <div class="item">
+      <div class="stage"><div class="watch"><div class="face halo">
+        <svg width="480" height="480" viewBox="0 0 480 480">
+          <circle cx="240" cy="240" r="222" fill="none" stroke="#15191c" stroke-width="7"/>
+          <defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#5fe3b3"/><stop offset="1" stop-color="#66e0ff"/></linearGradient>
+            <path id="botArc" d="M 80 300 A 176 176 0 0 0 400 300" fill="none"/>
+          </defs>
+          <circle cx="240" cy="240" r="222" fill="none" stroke="url(#hg)" stroke-width="7"
+            stroke-linecap="round" stroke-dasharray="1394.5" stroke-dashoffset="223.1"
+            transform="rotate(-90 240 240)"/>
+          <text font-family="-apple-system,Roboto,sans-serif" font-size="21" font-weight="600"
+            letter-spacing="4" fill="#8b93a0">
+            <textPath href="#botArc" startOffset="50%" text-anchor="middle">TUE  ·  1 JUL</textPath>
+          </text>
+        </svg>
+        <div class="h-ampm">PM</div>
+        <div class="h-time tab">10:08</div>
+        <div class="h-batt">84%</div>
+      </div></div></div>
+      <div class="name">2 · Halo</div>
+      <div class="tag">Circular native</div>
+      <div class="note"><b>원형을 위한 디자인.</b> 배터리가 베젤을 감싸는 정밀 링(84%).
+      날짜·요일은 하단 호를 따라 곡선 배치 — 사각 UI로는 못 만드는 "시계다움".</div>
+    </div>
+
+    <!-- 3 STRATA -->
+    <div class="item">
+      <div class="stage"><div class="watch"><div class="face strata">
+        <div class="s-time tab">10:08</div>
+        <div class="s-ampm">PM</div>
+        <div class="s-tray">
+          <div class="s-cell"><div class="s-k">DATE</div><div class="s-v">1 JUL</div></div>
+          <div class="s-cell"><div class="s-k">DAY</div><div class="s-v acc">TUE</div></div>
+          <div class="s-cell"><div class="s-k">BATT</div><div class="s-v mint">84%</div></div>
+        </div>
+      </div></div></div>
+      <div class="name">3 · Strata</div>
+      <div class="tag">Layered OS</div>
+      <div class="note"><b>깊이의 위계.</b> 시간은 히어로, 정보는 하단 트레이에 헤어라인 구획으로 정돈.
+      카드보다 평평하고 절제된, OS급 정보 밀도.</div>
+    </div>
+
+    <!-- 4 AURORA -->
+    <div class="item">
+      <div class="stage"><div class="watch"><div class="face aurora">
+        <div class="a-bloom"></div><div class="a-bloom2"></div>
+        <div class="a-top">TUE · 1 JUL</div>
+        <div class="a-time tab">10:08</div>
+        <div class="a-ampm">PM</div>
+        <div class="a-bar"><i></i></div>
+        <div class="a-batt">84%</div>
+      </div></div></div>
+      <div class="name">4 · Aurora</div>
+      <div class="tag">Expressive AMOLED</div>
+      <div class="note"><b>AMOLED 쇼케이스.</b> 시간 아래로 오로라 블룸이 번지고, 숫자는 여전히 순백·초선명.
+      배터리는 스펙트럼 바. 감성적이되 가독성은 사수.</div>
+    </div>
+
+  </div>
+</body>
+</html>

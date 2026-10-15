@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- hasCode must be false for a declarative Watch Face Format app -->
+    <application
+        android:label="@string/watch_face_name"
+        android:hasCode="false">
+
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <!-- Format version 2 (Wear OS 5+) — needed for renderMode MASK clipping, used to fill the
+             time text with a gradient. Target watch runs Wear OS 6 (Android 16 / One UI 8 Watch). -->
+        <property
+            android:name="com.google.wear.watchface.format.version"
+            android:value="2" />
+    </application>
+</manifest>
